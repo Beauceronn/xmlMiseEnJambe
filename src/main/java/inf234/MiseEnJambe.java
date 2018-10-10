@@ -55,13 +55,33 @@ public class MiseEnJambe {
         return false;
     }
 
-    /**
+   /**
      * Renvoie une version sans commentaire XML de texte.
-     * @return
+     * @return le texte sans les commentaires
      */
     public String sansCommentaire() {
-        return null;
-    }
+        	String text = this.texte; // recuperation du string texte de l'objet pour simplifier le texte
+			int tlength = texte.length(); //longueur en nombre de caracteres du  
+		  	String textemodif= ""; // String d'enregistrement du texte modifie ( sans les commentaires)
+		  
+			for( int i=0; i<tlength;i++){ // boucle de Parcour pour l'enregistrement du texte modife
+				if(text.charAt(i) == '<'
+				&& (text.charAt(i+1) == '!')  
+				&& (text.charAt(i+2) == '-') 
+				&& (text.charAt(i+3) == '-')){
+					i+=4;
+
+					//Boucle de parcour secondaire pour ne pas enregister les commentaires
+					while ((!(text.charAt(i) == '-')) && (!(text.charAt(i+1) == '-')) && (!(text.charAt(i+2) == '>'))) { 
+						i++;
+					}
+					i+=3;
+				} else {
+					textemodif = textemodif + texte.charAt(i);
+				}		
+			}
+			return textemodif;
+	}
 
     /**
      * Renvoie une version de texte où toutes les données contenues à l'intérieur d'une balise b on été supprimées.
